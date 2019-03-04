@@ -30,6 +30,7 @@ import java.util.Set;
 import static com.google.inject.multibindings.Multibinder.newSetBinder;
 import static io.airlift.configuration.ConfigBinder.configBinder;
 import static io.prestosql.server.security.SecurityConfig.AuthenticationType.CERTIFICATE;
+import static io.prestosql.server.security.SecurityConfig.AuthenticationType.HEALTH;
 import static io.prestosql.server.security.SecurityConfig.AuthenticationType.JWT;
 import static io.prestosql.server.security.SecurityConfig.AuthenticationType.KERBEROS;
 import static io.prestosql.server.security.SecurityConfig.AuthenticationType.PASSWORD;
@@ -62,6 +63,10 @@ public class ServerSecurityModule
             else if (authType == JWT) {
                 configBinder(binder).bindConfig(JsonWebTokenConfig.class);
                 authBinder.addBinding().to(JsonWebTokenAuthenticator.class).in(Scopes.SINGLETON);
+            }
+            else if (authType == HEALTH) {
+                configBinder(binder).bindConfig(HealthUrlConfig.class);
+                authBinder.addBinding().to(HealthUrlAuthenticator.class).in(Scopes.SINGLETON);
             }
             else {
                 throw new AssertionError("Unhandled auth type: " + authType);

@@ -38,6 +38,7 @@ public class SecurityConfig
         CERTIFICATE,
         KERBEROS,
         PASSWORD,
+        HEALTH,
         JWT
     }
 
@@ -54,7 +55,7 @@ public class SecurityConfig
     }
 
     @Config("http-server.authentication.type")
-    @ConfigDescription("Authentication types (supported types: CERTIFICATE, KERBEROS, PASSWORD, JWT)")
+    @ConfigDescription("Authentication types (supported types: CERTIFICATE, KERBEROS, PASSWORD, HEALTH, JWT)")
     public SecurityConfig setAuthenticationTypes(String types)
     {
         if (types == null) {
